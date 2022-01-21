@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useUpdateUser } from "../../firebase/CrudHooks";
 import styles from "../../styles/User.module.scss";
 
@@ -18,34 +19,40 @@ const UserUpdateModal = ({ handleCloseModal, user, reFetchUsers }: any) => {
   };
   return (
     <section className={styles.updateModal}>
-      <form onSubmit={updateInfo}>
-        <label htmlFor="nameInput">Your Name</label>
-        <input
-          type="text"
-          value={UpdateUserInfo.name}
-          id="nameInput"
-          onChange={(e) =>
-            setUpdateUserInfo({ ...UpdateUserInfo, name: e.target.value })
-          }
-        />
-        <label htmlFor="ageInput">Your Age</label>
-        <input
-          type="number"
-          value={UpdateUserInfo.age}
-          id="ageInput"
-          onChange={(e) =>
-            setUpdateUserInfo({
-              ...UpdateUserInfo,
-              age: parseInt(e.target.value),
-            })
-          }
-        />
+      <h6>Update Profile</h6>
+      <hr className="w-100"/>
+      <Form onSubmit={updateInfo}>
+        <Form.Group id="nameInputUpdate">
+          <Form.Label>Your Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={UpdateUserInfo.name}
+            onChange={(e) =>
+              setUpdateUserInfo({ ...UpdateUserInfo, name: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group id="ageInputUpdate">
+          <Form.Label>Your Age</Form.Label>
+          <Form.Control
+            type="text"
+            value={UpdateUserInfo.age}
+            onChange={(e) =>
+              setUpdateUserInfo({
+                ...UpdateUserInfo,
+                age: parseInt(e.target.value),
+              })
+            }
+          />
+        </Form.Group>
         <hr />
-        <div className="d-flex justify-content-between">
-          <button type="submit">Update</button>
-          <button onClick={handleCloseModal}>close</button>
+        <div className="d-flex justify-content-between w-100">
+          <Button type="submit">Update</Button>
+          <Button variant="danger" onClick={handleCloseModal}>
+            close
+          </Button>
         </div>
-      </form>
+      </Form>
     </section>
   );
 };
