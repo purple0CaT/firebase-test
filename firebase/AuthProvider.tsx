@@ -41,7 +41,14 @@ const AuthProvider = ({ children }: any) => {
   }
   //   === ResetPass
   function resetPassword(email: string) {
-    sendPasswordResetEmail(auth, email);
+    let check;
+    sendPasswordResetEmail(auth, email)
+      .then(() => (check = true))
+      .catch((err) => {
+        alert(err.message);
+        check = false;
+      });
+    return check;
   }
   //   === UpdateUserEmail
   function updateUserEmail(email: string) {
@@ -51,7 +58,7 @@ const AuthProvider = ({ children }: any) => {
   function updateUserPassword(password: string) {
     if (auth.currentUser) updatePassword(auth.currentUser, password);
   }
-  //
+  //   === Storage
   const value = {
     currentUser,
     loading,

@@ -1,0 +1,15 @@
+.resetEmail {
+  position: absolute;
+  top: -100px;
+  height: 200px;
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 0 9px grey;
+}
+.resetForm {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
