@@ -1,20 +1,33 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { useAuth } from "../../firebase/AuthProvider";
 
-const Login = () => {
+const Register = () => {
   const [UserCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
+    repeatPassword: "",
   });
-  const { logIn, currentUser }: any = useAuth();
   const router = useRouter();
+  const [error, setError] = useState("");
+  const { signUp, currentUser }: any = useAuth();
   //
   const handleUserLogin = async (e: any) => {
     e.preventDefault();
-    await logIn(UserCredentials.email, UserCredentials.password);
+    if (UserCredentials.password === UserCredentials.repeatPassword) {
+      const authorization = await signUp(
+        UserCredentials.email,
+        UserCredentials.password,
+      );
+      if (authorization) {
+        setError("");
+        router.push("/");
+      }
+    } else {
+      setError("Password don't match");
+    }
   };
   //
   useEffect(() => {
@@ -23,14 +36,14 @@ const Login = () => {
     }
     console.log(currentUser);
   }, [currentUser]);
-  //
   return (
     <div>
       <Form
         onSubmit={handleUserLogin}
         className="d-flex flex-column align-items-center text-center p-3"
       >
-        <h3 className="text-center text-muted">Login</h3>
+        <h3 className="text-center text-muted">Register</h3>
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group id="emailLogin">
           <Form.Label>Your email</Form.Label>
           <Form.Control
@@ -45,8 +58,8 @@ const Login = () => {
         <Form.Group id="passwordLogin">
           <Form.Label>Your Password</Form.Label>
           <Form.Control
-            required
             type="text"
+            required
             value={UserCredentials.password}
             onChange={(e) =>
               setUserCredentials({
@@ -56,12 +69,26 @@ const Login = () => {
             }
           />
         </Form.Group>
+        <Form.Group id="passwordLogin">
+          <Form.Label>Repeat Password</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            value={UserCredentials.repeatPassword}
+            onChange={(e) =>
+              setUserCredentials({
+                ...UserCredentials,
+                repeatPassword: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
         <hr />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Register</Button>
         <br />
         <Button variant="info">
-          <Link href="register">
-            <span style={{ color: "white" }}>Sign Up</span>
+          <Link href="login">
+            <span style={{ color: "white" }}>Login</span>
           </Link>
         </Button>
       </Form>
@@ -69,4 +96,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
