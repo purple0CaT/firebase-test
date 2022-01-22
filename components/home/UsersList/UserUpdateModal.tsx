@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useUpdateUser } from "../../firebase/CrudHooks";
-import styles from "../../styles/User.module.scss";
+import { useUpdateUser } from "../../../firebase/CrudHooks";
+import styles from "../../../styles/User.module.scss";
 
 const UserUpdateModal = ({ handleCloseModal, user, reFetchUsers }: any) => {
   const [UpdateUserInfo, setUpdateUserInfo] = useState(user);
@@ -20,7 +20,7 @@ const UserUpdateModal = ({ handleCloseModal, user, reFetchUsers }: any) => {
   return (
     <section className={styles.updateModal}>
       <h6>Update Profile</h6>
-      <hr className="w-100"/>
+      <hr className="w-100" />
       <Form onSubmit={updateInfo}>
         <Form.Group id="nameInputUpdate">
           <Form.Label>Your Name</Form.Label>

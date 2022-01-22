@@ -1,8 +1,11 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "./firebase-config";
@@ -15,7 +18,7 @@ export function useAuth() {
 const AuthProvider = ({ children }: any) => {
   const [currentUser, setCurrentUser]: any = useState();
   const [loading, setLoading]: any = useState(true);
-  // SignUp
+  // === SignUp
   function signUp(email: string, password: string) {
     createUserWithEmailAndPassword(auth, email, password)
       .then(
@@ -23,7 +26,7 @@ const AuthProvider = ({ children }: any) => {
       )
       .catch((error) => alert(error.message));
   }
-  //   LOGIN
+  // === LOGIN
   function logIn(email: string, password: string) {
     signInWithEmailAndPassword(auth, email, password)
       .then(
@@ -31,9 +34,22 @@ const AuthProvider = ({ children }: any) => {
       )
       .catch((error) => alert(error.message));
   }
+  // === LogOut
   function logOut() {
     signOut(auth);
     setCurrentUser(null);
+  }
+  //   === ResetPass
+  function resetPassword(email: string) {
+    sendPasswordResetEmail(auth, email);
+  }
+  //   === UpdateUserEmail
+  function updateUserEmail(email: string) {
+    if (auth.currentUser) updateEmail(auth.currentUser, email);
+  }
+  //   === Update User Password
+  function updateUserPassword(password: string) {
+    if (auth.currentUser) updatePassword(auth.currentUser, password);
   }
   //
   const value = {
@@ -42,7 +58,11 @@ const AuthProvider = ({ children }: any) => {
     signUp,
     logIn,
     logOut,
+    resetPassword,
+    updateUserEmail,
+    updateUserPassword,
   };
+  //
   useEffect(() => {
     const usnsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -50,6 +70,7 @@ const AuthProvider = ({ children }: any) => {
     });
     return usnsub;
   }, []);
+  //   JSX
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}

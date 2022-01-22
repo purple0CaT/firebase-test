@@ -18,7 +18,7 @@ const Login = () => {
   };
   //
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser?.email) {
       router.push("/");
     }
     console.log(currentUser);
@@ -35,7 +35,7 @@ const Login = () => {
           <Form.Label>Your email</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="email"
             value={UserCredentials.email}
             onChange={(e) =>
               setUserCredentials({ ...UserCredentials, email: e.target.value })
@@ -46,7 +46,7 @@ const Login = () => {
           <Form.Label>Your Password</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="password"
             value={UserCredentials.password}
             onChange={(e) =>
               setUserCredentials({

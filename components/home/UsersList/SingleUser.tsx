@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useDeleteUser, useUpdateUser } from "../../firebase/CrudHooks";
+import { useDeleteUser, useUpdateUser } from "../../../firebase/CrudHooks";
 import UserUpdateModal from "./UserUpdateModal";
 
 //
@@ -31,15 +31,18 @@ const SingleUser = ({ user, reFetchUsers }: SingUserImprt) => {
       <p className="m-0 mr-2">
         {user.name}, {user.age}years
       </p>
-      <Button
-        variant="success"
-        onClick={() => setShowUpdateModal(!ShowUpdateModal)}
-      >
-        update
-      </Button>
-      <Button variant="danger" onClick={handleDeleteUser}>
-        delete
-      </Button>
+      <div>
+        <Button
+          className="mr-1"
+          variant="success"
+          onClick={() => setShowUpdateModal(!ShowUpdateModal)}
+        >
+          update
+        </Button>
+        <Button variant="danger" onClick={handleDeleteUser}>
+          delete
+        </Button>
+      </div>
       {ShowUpdateModal && (
         <UserUpdateModal
           handleCloseModal={handleCloseModal}
