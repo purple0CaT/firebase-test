@@ -58,7 +58,7 @@ const Register = () => {
         <Form.Group id="passwordLogin">
           <Form.Label>Your Password</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             required
             value={UserCredentials.password}
             onChange={(e) =>
@@ -73,7 +73,7 @@ const Register = () => {
           <Form.Label>Repeat Password</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="password"
             value={UserCredentials.repeatPassword}
             onChange={(e) =>
               setUserCredentials({
